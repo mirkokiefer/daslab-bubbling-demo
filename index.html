@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Daslab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-size: 5rem;
+            color: white;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 1s ease-out;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+        
+        .hello {
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
+        }
+        
+        .daslab {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 1rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            margin-bottom: 3rem;
+        }
+        
+        /* Lab Equipment */
+        .lab-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 4rem;
+            position: relative;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        
+        .flask {
+            position: relative;
+            width: 100px;
+            height: 120px;
+        }
+        
+        /* Flask body - conical shape */
+        .flask-body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            border-radius: 0 0 40px 40px;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        /* Flask neck */
+        .flask-neck {
+            position: absolute;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Liquid in flask */
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(180deg, #f093fb 0%, #f5576c 100%);
+            opacity: 0.7;
+            animation: liquidBubble 3s ease-in-out infinite;
+        }
+        
+        .flask:nth-child(2) .liquid {
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            animation-delay: 1s;
+        }
+        
+        .flask:nth-child(3) .liquid {
+            background: linear-gradient(180deg, #43e97b 0%, #38f9d7 100%);
+            animation-delay: 2s;
+        }
+        
+        /* Bubbles */
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: rise 3s ease-in infinite;
+        }
+        
+        .bubble:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .bubble:nth-child(2) { left: 40%; animation-delay: 0.5s; width: 8px; height: 8px; }
+        .bubble:nth-child(3) { left: 60%; animation-delay: 1s; }
+        .bubble:nth-child(4) { left: 80%; animation-delay: 1.5s; width: 12px; height: 12px; }
+        .bubble:nth-child(5) { left: 30%; animation-delay: 2s; width: 6px; height: 6px; }
+        .bubble:nth-child(6) { left: 70%; animation-delay: 2.5s; }
+        
+        @keyframes rise {
+            0% {
+                bottom: 0;
+                opacity: 0;
+                transform: translateY(0) scale(1);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                bottom: 100%;
+                opacity: 0;
+                transform: translateY(-20px) scale(0.5);
+            }
+        }
+        
+        @keyframes liquidBubble {
+            0%, 100% {
+                height: 60%;
+            }
+            50% {
+                height: 65%;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes wave {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-10deg);
+            }
+            75% {
+                transform: rotate(10deg);
+            }
+        }
+        
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(240, 147, 251, 0.8));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(245, 87, 108, 0.8));
+            }
+        }
+        
+        /* Floating particles in background */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; width: 15px; height: 15px; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 1s; width: 8px; height: 8px; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 3s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; width: 12px; height: 12px; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 1.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 3.5s; width: 9px; height: 9px; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            .lab-container {
+                gap: 2rem;
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    
+    <div class="container">
+        <h1>
+            <span class="hello">Hello</span> <span class="daslab">Daslab</span>
+        </h1>
+        <p class="subtitle">✨ Where experiments come to life ✨</p>
+        
+        <div class="lab-container">
+            <div class="flask">
+                <div class="flask-neck"></div>
+                <div class="flask-body">
+                    <div class="liquid"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                </div>
+            </div>
+            
+            <div class="flask">
+                <div class="flask-neck"></div>
+                <div class="flask-body">
+                    <div class="liquid"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                </div>
+            </div>
+            
+            <div class="flask">
+                <div class="flask-neck"></div>
+                <div class="flask-body">
+                    <div class="liquid"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

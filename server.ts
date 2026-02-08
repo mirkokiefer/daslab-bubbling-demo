@@ -1,14 +1,25 @@
-import { sql, serve } from "bun";
+const indexHtml = await Bun.file('./index.html').text();
 
-const server = serve({
+const server = Bun.serve({
   port: 3000,
-  routes: {
-    "/": new Response("Welcome to Bun!"),
-    "/api/users": async (req) => {
-      const users = await sql`SELECT * FROM users LIMIT 10`;
-      return Response.json({ users });
-    },
+  fetch(req) {
+    const url = new URL(req.url);
+    
+    if (url.pathname === '/') {
+      return new Response(indexHtml, {
+        headers: { 'Content-Type': 'text/html' }
+      });
+    }
+    
+    if (url.pathname === '/api/test') {
+      return Response.json({ 
+        status: 'ok', 
+        timestamp: new Date().toISOString() 
+      });
+    }
+    
+    return new Response('Not found', { status: 404 });
   },
 });
 
-console.log(`Listening on localhost:${server.port}`);
+console.log(`Server running on http://localhost:${server.port}`);
